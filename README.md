@@ -1,4 +1,37 @@
 # Blue-Green Deployment Project
+Overview
+
+This project demonstrates the implementation of a Blue-Green Deployment strategy using Docker and Kubernetes. The application consists of a Node.js backend, MongoDB database, and two frontend environments (Blue and Green) that enable seamless application updates with zero downtime.
+
+Objectives
+Containerize application components using Docker.
+Orchestrate containers using Kubernetes.
+Implement Blue-Green Deployment for zero-downtime releases.
+Demonstrate service-based traffic switching between application versions.
+Ensure application availability during deployment and rollback operations.
+Architecture
+
+The project consists of the following components:
+
+Frontend Blue – Current production version of the application.
+Frontend Green – New version deployed alongside the Blue version.
+Backend Service – Node.js API server.
+MongoDB – Database service.
+Kubernetes Services – Provide service discovery and traffic routing.
+Kubernetes Deployments – Manage application replicas and self-healing.
+Blue-Green Deployment Workflow
+Deploy the current application version to the Blue environment.
+Deploy the updated application version to the Green environment.
+Verify the Green environment independently.
+Switch user traffic from Blue to Green by updating the Kubernetes Service selector.
+If issues are detected, instantly roll back traffic to the Blue environment.
+Traffic Flow Before Switch
+
+Users → Frontend Service → Frontend Blue Pods
+
+Traffic Flow After Switch
+
+Users → Frontend Service → Frontend Green Pods
 
 ## Prerequisites
 - Docker Desktop
@@ -94,6 +127,8 @@ Your `frontend-service.yaml` should:
 - Define version (blue/green)
 - Map ports correctly
 
+<img width="1254" height="211" alt="image" src="https://github.com/user-attachments/assets/4c89738c-178d-4764-a26d-acb1659ea4e6" />
+
 ### 6. Deploy to Minikube
 ```bash
 # Apply all manifests
@@ -147,6 +182,9 @@ kubectl patch service frontend-service --type='merge' -p '{
 - `l` - Check pod status
 - `kubectl logs <pod-name>` - View logs
 - `kubectl describe service frontend-service` - Service details
+
+<img width="1250" height="106" alt="image" src="https://github.com/user-attachments/assets/7ad2430b-48f8-42e7-bf0d-05a58ae41372" />
+<img width="1250" height="224" alt="image" src="https://github.com/user-attachments/assets/059f0cc1-54ab-4062-bd92-f5add6405861" />
 
 ![Uploading image.png…]()
 
